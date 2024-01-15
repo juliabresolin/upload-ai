@@ -24,7 +24,7 @@ export function App() {
         </div>
       </div>
 
-      <main className="flex-1 p-6 flex gap-6">
+      <main className="flex-1 p-6 flex flex-col gap-6 md:flex-row ">
         <div className="flex flex-col flex-1 gap-4">
           <div className="grid grid-rows-2 gap-4 flex-1">
             <Textarea placeholder="Inclua o prompt para a IA..." className="resize-none p-4 leading-relaxed"/>
@@ -36,7 +36,7 @@ export function App() {
             do conteúdo do vídeo selecionado.</p>
         </div>
 
-        <aside className="w-80 space-y-6">
+        <aside className="w-full space-y-6 md:w-80">
           <form className="space-y-6">
             <label htmlFor="video" className="border flex rounded-md aspect-video cursor-pointer border-dashed text-sm flex-col gap-2 items-center justify-center text-muted-foreground hover:bg-primary/5">
               <FileVideo className="w-4 h-4"/>
