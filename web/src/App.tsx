@@ -9,6 +9,9 @@ import { VideoInputForm } from "./components/video-input-form";
 import { PromptSelect } from "./components/prompt-select";
 
 export function App() {
+  function handlePromptSelected(template: string) {
+    console.log(template)
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -45,7 +48,7 @@ export function App() {
 
           <div className="space-y-2">
               <Label>Prompt</Label>
-              <PromptSelect />
+              <PromptSelect onPromptSelect={handlePromptSelected}/>
             </div>
 
           <form className="space-y-4">
