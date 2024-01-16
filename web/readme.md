@@ -16,3 +16,6 @@ $ pnpm install
 $ pnpm run dev
 ```
 
+----
+Made with ❤️ by Julia Bresolin
+
