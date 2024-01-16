@@ -18,6 +18,6 @@ app.register(generateAiCompletionRoute)
 
 app.listen({
   port: 3333,
-}).then((port) => {
-  console.log(`🚀 Server running on ${port}...`)
+}).then((host) => {
+  console.log(`🚀 Server running on ${host}...`)
 })

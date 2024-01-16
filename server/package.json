@@ -20,6 +20,7 @@
     "@fastify/cors": "^8.5.0",
     "@fastify/multipart": "^8.1.0",
     "@prisma/client": "5.8.1",
+    "ai": "^2.2.31",
     "fastify": "^4.25.2",
     "openai": "^4.24.7",
     "zod": "^3.22.4"
