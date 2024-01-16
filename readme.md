@@ -11,8 +11,8 @@ Aplicação responsável por realizar a transcrição de um determinado vídeo u
 - OpenAI API
 
 ## Documentação
-- (/server/readme.md)[Server]
-- (/web/readme.md)[Web]
+- [./server/readme.md](Server)
+- [./web/readme.md](Web)
 
 ----
 Made with ❤️ by Julia Bresolin
