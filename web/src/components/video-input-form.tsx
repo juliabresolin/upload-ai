@@ -8,8 +8,18 @@ import { loadFFmpeg } from "@/lib/ffmpeg";
 import { fetchFile } from '@ffmpeg/util'
 import { api } from "@/lib/axios";
 
+type Status = 'waiting' | 'converting' | 'uploading' | 'generating' | 'success'
+
+const statusMessages = {
+  converting: 'Convertendo..', 
+  uploading: 'Carregando...', 
+  generating: 'Transcrevendo...', 
+  success: 'Sucesso!', 
+}
+
 export function VideoInputForm() {
   const [videoFile, setVideoFile] = useState<File | null>(null)
+  const [status, setStatus] = useState<Status>('waiting')
   const promptInputRef = useRef<HTMLTextAreaElement>(null)
 
   function handleFileSelected(event: ChangeEvent<HTMLInputElement>) {
@@ -61,18 +71,26 @@ export function VideoInputForm() {
 
     if (!videoFile) return
 
+    setStatus('converting')
+
     const audioFile = await convertVideoToAudio(videoFile)
 
     const data = new FormData()
     data.append('file', audioFile)
 
+    setStatus('uploading')
+
     const response = await api.post('/videos', data)
 
     const videoId = response.data.video.id
 
+    setStatus('generating')
+
     await api.post(`/videos/${videoId}/transcription`, {
       prompt
     })    
+
+    setStatus('success')
   }
 
   const previewURL = useMemo(() => {
@@ -101,12 +119,19 @@ export function VideoInputForm() {
 
       <div className="space-y-1">
         <Label htmlFor="transcription-prompt">Prompt de transcrição</Label>
-        <Textarea ref={promptInputRef} id="transcription-prompt" className="h-20 leading-relaxed resize-none" placeholder="Inclua palavras-chave mencionadas no vídeo separadas por vírgula (,)." />
+        <Textarea ref={promptInputRef} disabled={status !== 'waiting'} id="transcription-prompt" className="h-20 leading-relaxed resize-none" placeholder="Inclua palavras-chave mencionadas no vídeo separadas por vírgula (,)." />
       </div>
 
-      <Button type="submit" className="w-full">
-        Carregar vídeo
-        <Upload className="w-4 h-4 ml-2" />
+      <Button type="submit" className="w-full data-[success=true]:bg-emerald-600" data-success={status === 'success'} disabled={status !== 'waiting'}>
+        { status === 'waiting' ? (
+          <>
+          Carregar vídeo
+          <Upload className="w-4 h-4 ml-2" />
+          </>
+        ) : (
+          statusMessages[status]
+        )}
+        
       </Button>
     </form>
   )
